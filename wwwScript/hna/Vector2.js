@@ -18,7 +18,7 @@ Vector2.prototype.distance = function(vector) {
 };
 
 Vector2.prototype.distanceSquared = function(vector) {
-    return this.substract(vector).lengthSquared();
+    return this.clone().substract(vector).lengthSquared();
 };
 
 Vector2.prototype.dot = function(vector) {

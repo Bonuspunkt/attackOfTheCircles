@@ -1,46 +1,43 @@
-var EventEmitter = require('./hna/EventEmitter');
-var util = require('./hna/util');
-var config = require('./config');
+const React = require('react');
+const {g, circle} = React.DOM;
+const EventEmitter = require('./hna/EventEmitter');
 
-var ROCKET_SIZE = config.rocket.size;
-var SPEED = config.rocket.speed;
-var LIFETIME = config.rocket.lifetime;
+const config = require('./config');
+const { size, speed, lifetime } = config.rocket;
 
-function Rocket(position, direction) {
-    EventEmitter.call(this);
+class Rocket extends EventEmitter {
+    constructor(position, direction) {
+        super();
 
-    this.position = position.clone();
-    this.move = direction.clone().multiply(SPEED);
+        this.position = position.clone();
+        this.move = direction.clone().multiply(speed);
+    }
+
+    update(delta, timestamp) {
+        if (!this.start) {
+            this.start = timestamp;
+        }
+
+        if (timestamp - this.start > lifetime) {
+            this.emit('dead');
+        } else {
+            this.position.add(this.move.clone().multiply(delta));
+        }
+    }
+
+    draw(context) {
+        const x = this.position.x;
+        const y = this.position.y;
+        const scale = size / 32;
+
+        const transform = `translate(${x} ${y}) scale(${scale})`;
+
+        return (
+            <g transform={ transform } fill="#f00">
+                <circle cx="0" cy="0" r="16" />
+            </g>
+        );
+    }
 }
-
-util.inherits(Rocket, EventEmitter);
-
-Rocket.prototype.update = function(timestampDelta, timestamp) {
-    if (!this.start) {
-        this.start = timestamp;
-    }
-
-    if (timestamp - this.start > LIFETIME) {
-        this.emit('dead');
-    } else {
-        this.position.add(this.move);
-    }
-};
-
-Rocket.prototype.draw = function(context) {
-    if (this.explode) {
-        context.beginPath();
-        context.arc(this.position.x, this.position.y, 10, 0, 2 * Math.PI);
-        context.fillStyle = '#f00';
-        context.fill();
-        context.closePath();
-    } else {
-        context.fillStyle = '#f00';
-        context.fillRect(
-            this.position.x - ROCKET_SIZE / 2,
-            this.position.y - ROCKET_SIZE / 2,
-            ROCKET_SIZE, ROCKET_SIZE);
-    }
-};
 
 module.exports = Rocket;

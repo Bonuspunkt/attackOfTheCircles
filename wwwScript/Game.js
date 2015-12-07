@@ -1,52 +1,34 @@
-function Game(canvasEl) {
-    var components = [];
+const ReactDOM = require('react-dom');
 
-    var context = canvasEl.getContext('2d');
+const PlayScene = require('./PlayScene');
 
-    this.addComponent = function addComponent(component) {
-        component.on('dead', function() {
-            this.removeComponent(component);
-        }.bind(this));
-        components.push(component);
-    };
-    this.removeComponent = function removeComponent(component) {
-        var index = components.indexOf(component);
-        component = components.splice(index, 1);
-    };
+class Game {
 
-    var lastTimestamp = 0;
+    constructor() {
+        this.scene = new PlayScene();
+    }
 
-    this.run = function run(timestamp) {
-        var timestampDelta = timestamp - lastTimestamp;
-        lastTimestamp = timestamp;
+    start() {
+        requestAnimationFrame(stamp => this.run(stamp));
+    }
 
-        components.forEach(function(cmp) {
-            cmp.update(timestampDelta, timestamp);
-        });
+    run(timestamp) {
+        if (!this.lastTimestamp) { this.lastTimestamp = timestamp; }
+        const timestampDelta = timestamp - this.lastTimestamp;
 
-        context.clearRect(0, 0, canvasEl.width, canvasEl.height);
-        components.forEach(function(cmp) {
-            cmp.draw && cmp.draw(context);
-        });
+        this.scene.update(timestampDelta, timestamp);
 
-        if (running) {
-            requestAnimationFrame(run);
-        }
-    };
+        const rendered = this.scene.render();
 
-    this.getComponents = function(fn) {
-        return components.filter(fn);
-    };
+        ReactDOM.render(
+            rendered,
+            document.querySelector('#body')
+        );
 
-    var running = false;
-    this.start = function() {
-        running = true;
-        requestAnimationFrame(this.run);
-    };
+        requestAnimationFrame(stamp => this.run(stamp));
 
-    this.stop = function() {
-        running = false;
-    };
+        this.lastTimestamp = timestamp;
+    }
 }
 
 

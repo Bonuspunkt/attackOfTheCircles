@@ -1,21 +1,26 @@
 module.exports = {
 
-    canvas: {
-        width: 1280,
-        height: 720
+    viewBox: {
+        width: 640,
+        height: 640
     },
 
     player: {
         size: 16,
-        speed: 2.5,
-        aimSpeed: 1,
+        speed: 0.12,
+        aimSpeed: 0.08,
         shootInterval: 500
     },
 
     rocket: {
         size: 4,
-        speed: 5,
-        lifetime: 750
+        speed: 0.25,
+        lifetime: 1500
+    },
+
+    spawner: {
+        minDistance: 50,
+        interval: 500
     },
 
     follower: {
@@ -25,21 +30,8 @@ module.exports = {
             b: 0
         },
         size: 16,
-        speed: 2,
+        speed: 0.1,
         spawnSleep: 500
-    },
-
-    whirrer: {
-        color: {
-            r: 0,
-            g: 0,
-            b: 180
-        },
-        size: 16,
-        speed: 2,
-        spawnSleep: 500,
-        radius: 30,
-        rotationSpeed: 1e-2
     },
 
     dasher: {
@@ -56,12 +48,16 @@ module.exports = {
         slowdown: 0.9
     },
 
-    spawner: {
-        minDistance: 100,
-        interval: 750
+    whirrer: {
+        color: {
+            r: 0,
+            g: 0,
+            b: 180
+        },
+        size: 16,
+        speed: 0.1,
+        spawnSleep: 500,
+        radius: 16,
+        rotationSpeed: 1e-2
     },
-    gameLogic: {
-        bulletDistance: 10,
-        playerDistance: 16
-    }
 };
