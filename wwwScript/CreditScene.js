@@ -19,9 +19,11 @@ class CreditScene {
     render() {
         var viewBox = `-10 ${this.y} 640 640`;
 
+        // FIXME: need something proper, that can be easily extendend
+        // and does not need manual y calc
         return (
             <svg viewBox={ viewBox } preserveAspectRatio="xMidYMid meet"
-                 width={window.innerWidth} height={window.innerHeight}>
+                 width={ window.innerWidth } height={ window.innerHeight }>
                 <Text fontSize={ 24 } x={ 0 } y={ 0 }>
                     === MUSIC ===
                 </Text>
