@@ -25,12 +25,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Bonuspunkt/attackOfTheSquares.git"
+    "url": "git+https://github.com/Bonuspunkt/attackOfTheCircles.git"
   },
   "author": "Bonuspunkt",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/Bonuspunkt/attackOfTheSquares/issues"
+    "url": "https://github.com/Bonuspunkt/attackOfTheCircles/issues"
   },
-  "homepage": "https://github.com/Bonuspunkt/attackOfTheSquares#readme"
+  "homepage": "https://github.com/Bonuspunkt/attackOfTheCircles#readme"
 }
