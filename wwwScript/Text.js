@@ -873,14 +873,19 @@ class Text extends React.Component {
         let x = 0;
         return this.props.children
             .split('')
-            .map(char => chars[char] || chars['default'])
-            .map(char => {
+            .map((char, i) => {
+                return {
+                    key: char + '-' + i,
+                    data: chars[char] || chars['default']
+                };
+            })
+            .map((char, i) => {
                 const charWrap = (
-                    <g transform={ 'translate(' + x + ' 0)' }>
-                        { char.path }
+                    <g key={ char.key } transform={ 'translate(' + x + ' 0)' }>
+                        { char.data.path }
                     </g>
                 );
-                x += char.width;
+                x += char.data.width;
                 return charWrap;
             });
     }
