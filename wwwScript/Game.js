@@ -1,10 +1,13 @@
-const ReactDOM = require('react-dom');
+'use strict';
+//const ReactDOM = require('react-dom');
 
 const PlayScene = require('./PlayScene');
+//const CreditScene = require('./CreditScene');
 
 class Game {
 
-    constructor() {
+    constructor(context) {
+        this.context = context;
         this.scene = new PlayScene();
     }
 
@@ -17,13 +20,7 @@ class Game {
         const timestampDelta = timestamp - this.lastTimestamp;
 
         this.scene.update(timestampDelta, timestamp);
-
-        const rendered = this.scene.render();
-
-        ReactDOM.render(
-            rendered,
-            document.querySelector('#body')
-        );
+        this.scene.render(this.context);
 
         requestAnimationFrame(stamp => this.run(stamp));
 

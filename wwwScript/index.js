@@ -1,3 +1,4 @@
+'use strict';
 //
 // setup audio
 //
@@ -53,8 +54,21 @@ Promise.all(tracks.map(getBufferSource)).then(function(nodes) {
     intro.start(0);
 });
 
+var canvasEl = document.querySelector('canvas');
+var context = canvasEl.getContext('2d');
+
+
+function initContextSize() {
+    canvasEl.height = window.innerHeight;
+    canvasEl.width = window.innerWidth;
+    var min = Math.min(window.innerHeight, window.innerWidth);
+    var scale = min / 640;
+    context.scale(scale, scale);
+}
+window.addEventListener('resize', initContextSize);
+initContextSize();
 
 
 const Game = require('./Game');
 
-new Game().start();
+new Game(context).start();

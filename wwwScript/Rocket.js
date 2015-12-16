@@ -1,5 +1,3 @@
-const React = require('react');
-const {g, circle} = React.DOM;
 const EventEmitter = require('./hna/EventEmitter');
 
 const config = require('./config');
@@ -28,15 +26,13 @@ class Rocket extends EventEmitter {
     draw(context) {
         const x = this.position.x;
         const y = this.position.y;
-        const scale = size / 32;
+        const radius = size / 2;
 
-        const transform = `translate(${x} ${y}) scale(${scale})`;
-
-        return (
-            <g transform={ transform } fill="#f00">
-                <circle cx="0" cy="0" r="16" />
-            </g>
-        );
+        context.beginPath();
+        context.arc(x, y, radius, 0, 2 * Math.PI);
+        context.fillStyle = '#f00';
+        context.fill();
+        context.closePath();
     }
 }
 

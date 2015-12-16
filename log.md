@@ -67,3 +67,9 @@ also abstracting the GamePad API would be nice to support different input types 
 - mouse & keyboard
 - accerometer + touch
 - virtual thumbsticks (touch)
+
+## 2015-12-15
+tested the game on xbox one. fuck, i think FirefoxOS could outperform it :/
+unplayable with 60cmps
+
+alright lets move back to canvas and see if we can get crisp circles

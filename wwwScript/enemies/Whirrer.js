@@ -1,6 +1,3 @@
-var React = require('react');
-var { circle } = React.DOM;
-
 var EventEmitter = require('../hna/EventEmitter');
 var util = require('../hna/util');
 var Vector2 = require('../hna/Vector2');
@@ -44,20 +41,19 @@ Whirrer.prototype.update = function(delta, timestamp) {
     this.position = this.basePosition.clone().add(offset);
 };
 
-Whirrer.prototype.draw = function() {
+Whirrer.prototype.draw = function(context) {
     const x = this.position.x;
     const y = this.position.y;
-    const scale = size / 32;
-
-    const transform = `translate(${x} ${y}) scale(${scale})`;
+    const radius = size / 2;
 
     const newColor = util.getRGBA(color, this.active || 0);
 
-    return (
-        <g transform={ transform } fill={ newColor }>
-            <circle cx="0" cy="0" r="16" />
-        </g>
-    );
+    context.beginPath();
+    context.arc(x, y, radius, 0, 2*Math.PI)
+    context.fillStyle = newColor;
+    context.fill();
+    context.closePath();
+
 };
 
 
