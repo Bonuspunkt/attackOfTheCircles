@@ -1,9 +1,6 @@
-const React = require('react');
-const { g, circle, line } = React.DOM;
-
-var EventEmitter = require('./hna/EventEmitter');
-
-var Vector2 = require('./hna/Vector2');
+'use strict';
+const EventEmitter = require('./hna/EventEmitter');
+const Vector2 = require('./hna/Vector2');
 
 var config = require('./config');
 
@@ -69,28 +66,36 @@ class Player extends EventEmitter {
         return false;
     }
 
-    draw() {
-
-        const aimColor = 'rgba(255,0,0, 0.25)';
-        const aimEl = (
-            <line x1={size / 2} y1="0" x2={1e6} stroke={aimColor} y2="0" strokeWidth="2" />
-        );
+    draw(context) {
 
         const x = this.position.x;
         const y = this.position.y;
-        const rotation = (this.angle || 0) * 180 / Math.PI;
+        const radius = size / 2;
 
-        const scale = size / 32;
+        context.beginPath();
+        context.arc(x, y, radius, 0, 2 * Math.PI)
+        context.fillStyle = '#000';
+        context.fill();
+        context.closePath();
 
-        const transform = `translate(${x} ${y}) rotate(${rotation}) scale(${scale})`;
+        /*
+        context.translate(this.position.x, this.position.y);
+        context.rotate(this.angle);
 
-        return (
-            <g key={this.gamepadIndex} transform={ transform }>
-                <circle cx="0" cy="0" r="16" fill="black" />
-                <path d="M0 -14 L8-2 H3 L5 13 H-5 L-3-2 H-8 Z" stroke="white" strokeWidth="1" transform="rotate(90)"/>
-                { this.aim ? aimEl : null }
-            </g>
-        );
+        context.rotate(-this.angle);
+        context.translate(-this.position.x, -this.position.y);
+        */
+
+        if (this.aim) {
+            context.beginPath();
+            context.moveTo(this.position.x, this.position.y);
+            context.lineTo(
+                x + this.direction.x * 1e6,
+                y + this.direction.y * 1e6);
+            context.strokeStyle = 'rgba(255,0,0, 0.25)';
+            context.stroke();
+            context.closePath();
+        }
     }
 }
 

@@ -1,6 +1,3 @@
-var React = require('react');
-var { circle } = React.DOM;
-
 var EventEmitter = require('../hna/EventEmitter');
 var Vector2 = require('../hna/Vector2');
 var util = require('../hna/util');
@@ -56,13 +53,11 @@ class Dasher extends EventEmitter {
         }
     }
 
-    draw() {
+    draw(context) {
 
         const x = this.position.x;
         const y = this.position.y;
-        const scale = size / 32;
-
-        const transform = `translate(${x} ${y}) scale(${scale})`;
+        const radius = size / 2;
 
         const newColor = util.getRGBA(
             Math.round(color.r * this.colorFactor),
@@ -70,11 +65,11 @@ class Dasher extends EventEmitter {
             Math.round(color.b * this.colorFactor),
             this.active || 0);
 
-        return (
-            <g transform={ transform } fill={ newColor }>
-                <circle cx="0" cy="0" r="16" />
-            </g>
-        );
+        context.beginPath();
+        context.arc(x, y, radius, 0, 2*Math.PI)
+        context.fillStyle = newColor;
+        context.fill();
+        context.closePath();
     }
 }
 
