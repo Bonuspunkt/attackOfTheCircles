@@ -1,4 +1,6 @@
 # Attack of the circles
+
+[![Greenkeeper badge](https://badges.greenkeeper.io/Bonuspunkt/attackOfTheCircles.svg)](https://greenkeeper.io/)
 Fork of [Attack of the squares](https://github.com/Bonuspunkt/attackOfTheSquares)
 
 Changes:
